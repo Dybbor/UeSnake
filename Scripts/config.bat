@@ -43,5 +43,5 @@ set TestNames=
 set TestOutputLogPath=%ProjectRoot%\Build\Tests\Tests.log
 set ReportOutputPath=%ProjectRoot%\Build\Tests
 set ExludedPathForTestReport=%SourceCodePath%\%ProjectPureName%\Tests
-set UEAutomationContentPath=%EnginePath%\Engine\Content\Automation
+
 set OpenCPPCoveragePath=C:\Program Files\OpenCppCoverage\OpenCppCoverage.exe
