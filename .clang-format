@@ -12,7 +12,11 @@ AllowShortFunctionsOnASingleLine: Inline
 PointerAlignment: Left
 AllowShortIfStatementsOnASingleLine: true
 SpacesBeforeTrailingComments: 2
-AllowShortCaseLabelsOnASingleLine: true
-IndentCaseLabels: true
 AlwaysBreakTemplateDeclarations: Yes
 AlignEscapedNewlines: Left
+NamespaceIndentation: All
+FixNamespaceComments: false
+AllowShortCaseLabelsOnASingleLine: false
+IndentCaseLabels: true
+PackConstructorInitializers: Never
+BreakConstructorInitializers: BeforeComma
