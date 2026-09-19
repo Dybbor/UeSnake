@@ -11,4 +11,9 @@ namespace Snake
         , m_grid{MakeShared<Grid>(settings.gridSize)}
     {
     }
+
+    TSharedPtr<Grid> Game::grid() const
+    {
+        return m_grid;
+    }
 }

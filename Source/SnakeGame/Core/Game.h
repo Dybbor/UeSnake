@@ -9,7 +9,9 @@ namespace Snake
     class Game
     {
     public:
-        Game(const Settings& );
+        Game(const Settings&);
+
+        TSharedPtr<Grid> grid() const;
 
     private:
         const Settings c_settings;
