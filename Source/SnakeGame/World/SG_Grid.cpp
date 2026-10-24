@@ -1,4 +1,5 @@
 #include "World/SG_Grid.h"
+#include "Components/LineBatchComponent.h"
 #include "Core/Grid.h"
 #include "DrawDebugHelpers.h"
 
@@ -35,15 +36,25 @@ void ASG_Grid::SetModel(const TSharedPtr<Snake::Grid>& Grid, int32 InCellSize)
 
 void ASG_Grid::DrawGrid()
 {
+    const auto World = GetWorld();
+
+    if (!World)
+        return;
+
+    const auto LineBatcher = World->GetLineBatcher(UWorld::ELineBatcherType::World);
+
+    if (!LineBatcher)
+        return;
+
     for (int32 i = 0; i < GridDim.height + 1; ++i)
     {
         const auto StartLocation = GetActorLocation() + GetActorForwardVector() * CellSize * i;
-        DrawDebugLine(GetWorld(), StartLocation, StartLocation + GetActorRightVector() * WorldWidth, FColor::Red, false, -1.0f, 0, 2.0f);
+        LineBatcher->DrawLine(StartLocation, StartLocation + GetActorRightVector() * WorldWidth, FLinearColor::Red, 0, 2.0f);
     }
 
     for (int32 i = 0; i < GridDim.width + 1; ++i)
     {
         const auto StartLocation = GetActorLocation() + GetActorRightVector() * CellSize * i;
-        DrawDebugLine(GetWorld(), StartLocation, StartLocation + GetActorForwardVector() * WorldHeight, FColor::Red, false, -1.0f, 0, 2.0f);
+        LineBatcher->DrawLine(StartLocation, StartLocation + GetActorForwardVector() * WorldWidth, FLinearColor::Red, 0, 2.0f);
     }
 }
