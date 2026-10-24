@@ -12,7 +12,7 @@ void ASG_GameMode::StartPlay()
     Super::StartPlay();
 
     // init core game
-    const Snake::Settings GS{GridSize.X, GridSize.Y};
+    const Snake::Settings GS{GridDims.X, GridDims.Y};
     Game = MakeUnique<Snake::Game>(GS);
     check(Game.IsValid());
 

@@ -3,15 +3,15 @@
 
 namespace
 {
-    float HalfFOVTan(float FOVDegrees)
+    double HalfFOVTan(double FOVDegrees)
     {
-        return FMath::Tan(FMath::DegreesToRadians(FOVDegrees * 0.5f));
+        return FMath::Tan(FMath::DegreesToRadians(FOVDegrees * 0.5));
     }
 
-    float CalculateHalfVerticalFOVTan(float HorizontalFOVDegress, float ViewportAspectRatioHW)
+    double CalculateHalfVerticalFOVTan(double HorizontalFOVDegress, double ViewportAspectRatioHW)
     {
-        const float HorizontalFOVRadians = FMath::DegreesToRadians(HorizontalFOVDegress);
-        return FMath::RadiansToDegrees(2.0f * FMath::Atan(FMath::Tan(HorizontalFOVRadians * 0.5) * ViewportAspectRatioHW));
+        const double HorizontalFOVRadians = FMath::DegreesToRadians(HorizontalFOVDegress);
+        return FMath::RadiansToDegrees(2.0 * FMath::Atan(FMath::Tan(HorizontalFOVRadians * 0.5) * ViewportAspectRatioHW));
     }
 }
 
@@ -25,7 +25,7 @@ ASG_Pawn::ASG_Pawn()
     check(Camera);
     Camera->SetupAttachment(Origin);
 }
-void ASG_Pawn::UpdateLocation(const Snake::Dim& InDim, int32 InCellSize, const FTransform& InGridOrigin)
+void ASG_Pawn::UpdateLocation(const Snake::Dim& InDim, uint32 InCellSize, const FTransform& InGridOrigin)
 {
     Dim = InDim;
     CellSize = InCellSize;
@@ -36,27 +36,36 @@ void ASG_Pawn::UpdateLocation(const Snake::Dim& InDim, int32 InCellSize, const F
     check(GEngine->GameViewport->Viewport);
 
     auto Viewport = GEngine->GameViewport->Viewport;
-    Viewport->ViewportResizedEvent.AddUObject(this, &ASG_Pawn::OnViewportResized);
+
+    Viewport->ViewportResizedEvent.Remove(ResizedWindowHandle);
+    ResizedWindowHandle = Viewport->ViewportResizedEvent.AddUObject(this, &ASG_Pawn::OnViewportResized);
 
 #if WITH_EDITOR
-    OnViewportResized(Viewport, 0.0f);
+    OnViewportResized(Viewport, 0);
 #endif
+}
+
+void ASG_Pawn::EndPlay(const EEndPlayReason::Type Reason)
+{
+    FViewport::ViewportResizedEvent.Remove(ResizedWindowHandle);
+    Super::EndPlay(Reason);
 }
 
 void ASG_Pawn::OnViewportResized(FViewport* Viewport, uint32 Value)
 {
-    if (!Viewport || !Viewport->GetSizeXY().Y || !Dim.height )
-    {
+    if (Viewport != GetOwnViewport())
         return;
-    }
 
-    const float WorldWidth = Dim.width * CellSize;
-    const float WorldHeight = Dim.height * CellSize;
+    if (!Viewport || !Viewport->GetSizeXY().Y || !Dim.height)
+        return;
 
-    const float ViewportAspectRatio = static_cast<float>(Viewport->GetSizeXY().X) / Viewport->GetSizeXY().Y;
-    const float GridAspectRatio = static_cast<float>(Dim.width) / Dim.height;
+    const double WorldWidth = Dim.width * CellSize;
+    const double WorldHeight = Dim.height * CellSize;
 
-    float LocationZ = 0.0f;
+    const double ViewportAspectRatio = static_cast<double>(Viewport->GetSizeXY().X) / Viewport->GetSizeXY().Y;
+    const double GridAspectRatio = static_cast<double>(Dim.width) / Dim.height;
+
+    double LocationZ = 0.0;
 
     if (ViewportAspectRatio <= GridAspectRatio)
     {
@@ -64,10 +73,17 @@ void ASG_Pawn::OnViewportResized(FViewport* Viewport, uint32 Value)
     }
     else
     {
-        check(ViewportAspectRatio) const float VerticalFOV = CalculateHalfVerticalFOVTan(Camera->FieldOfView, 1.0 / ViewportAspectRatio);
+        check(ViewportAspectRatio) const double VerticalFOV = CalculateHalfVerticalFOVTan(Camera->FieldOfView, 1.0 / ViewportAspectRatio);
         LocationZ = WorldHeight / HalfFOVTan(VerticalFOV);
     }
 
-    const FVector NewPawnLocation = GridOrigin.GetLocation() + 0.5f * FVector(WorldHeight, WorldWidth, LocationZ);
+    const FVector NewPawnLocation = GridOrigin.GetLocation() + 0.5 * FVector(WorldHeight, WorldWidth, LocationZ);
     SetActorLocation(NewPawnLocation);
+}
+
+FViewport* ASG_Pawn::GetOwnViewport() const
+{
+    const auto World = GetWorld();
+    const auto GVC = World ? World->GetGameViewport() : nullptr;
+    return GVC ? GVC->Viewport : nullptr;
 }

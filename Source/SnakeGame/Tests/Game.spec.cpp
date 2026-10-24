@@ -17,7 +17,7 @@ void FSnakeGame::Define()
             It("GridShouldExist",
                 [this]()
                 {
-                    const Settings GameSettings{.gridSize = {10, 40}};
+                    const Settings GameSettings{.gridDims = {10, 40}};
                     const Game CoreGame = Game(GameSettings);
                     TestTrueExpr(CoreGame.grid().IsValid());
                 });

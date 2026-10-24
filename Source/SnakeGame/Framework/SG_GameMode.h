@@ -16,7 +16,7 @@ class SNAKEGAME_API ASG_GameMode : public AGameModeBase
 
 protected:
     UPROPERTY(EditDefaultsOnly, meta = (ClampMin = "10", ClampMax = "100"));
-    FIntPoint GridSize{10, 10};
+    FIntPoint GridDims{10, 10};
 
     UPROPERTY(EditDefaultsOnly, meta = (ClampMin = "10", ClampMax = "100"));
     int32 CellSize{10};

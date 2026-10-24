@@ -8,7 +8,7 @@ namespace Snake
 {
     Snake::Game::Game(const Settings& settings)
         : c_settings{settings}
-        , m_grid{MakeShared<Grid>(settings.gridSize)}
+        , m_grid{MakeShared<Grid>(settings.gridDims)}
     {
     }
 

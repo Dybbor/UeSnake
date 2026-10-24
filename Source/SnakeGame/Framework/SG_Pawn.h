@@ -15,10 +15,14 @@ class SNAKEGAME_API ASG_Pawn : public APawn
 public:
 	ASG_Pawn();
 
-	void UpdateLocation(const Snake::Dim& Dim, int32 CellSize, const FTransform& GridOrigin);
+	void UpdateLocation(const Snake::Dim& Dim, uint32 CellSize, const FTransform& GridOrigin);
+
+    void EndPlay(const EEndPlayReason::Type Reason) override;
 
 private:
     void OnViewportResized(FViewport* Viewport, uint32 Value);
+
+    FViewport* GetOwnViewport() const;
 
 protected:
 	UPROPERTY(VisibleAnywhere)
@@ -31,4 +35,5 @@ private:
     Snake::Dim Dim;
     int32 CellSize;
     FTransform GridOrigin;
+    FDelegateHandle ResizedWindowHandle;
 };

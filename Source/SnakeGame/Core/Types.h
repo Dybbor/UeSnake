@@ -22,7 +22,7 @@ namespace Snake
 
     struct Settings
     {
-        Dim gridSize;
+        Dim gridDims;
 
         bool operator==(const Settings&) const = default;
     };
