@@ -38,12 +38,12 @@ void ASG_Grid::DrawGrid()
     for (int32 i = 0; i < GridDim.height + 1; ++i)
     {
         const auto StartLocation = GetActorLocation() + GetActorForwardVector() * CellSize * i;
-        DrawDebugLine(GetWorld(), StartLocation, StartLocation + GetActorRightVector() * WorldWidth, FColor::Red, false, -1.0f, 0, 1.0f);
+        DrawDebugLine(GetWorld(), StartLocation, StartLocation + GetActorRightVector() * WorldWidth, FColor::Red, false, -1.0f, 0, 2.0f);
     }
 
     for (int32 i = 0; i < GridDim.width + 1; ++i)
     {
         const auto StartLocation = GetActorLocation() + GetActorRightVector() * CellSize * i;
-        DrawDebugLine(GetWorld(), StartLocation, StartLocation + GetActorForwardVector() * WorldHeight, FColor::Red, false, -1.0f, 0, 1.0f);
+        DrawDebugLine(GetWorld(), StartLocation, StartLocation + GetActorForwardVector() * WorldHeight, FColor::Red, false, -1.0f, 0, 2.0f);
     }
 }

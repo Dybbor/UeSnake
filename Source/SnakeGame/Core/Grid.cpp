@@ -45,7 +45,7 @@ namespace Snake
             FString line;
             for (int32 x = 0; x < c_dim.width; ++x)
             {
-                TCHAR symbol;
+                TCHAR symbol{};
                 switch (m_cells[posToIndex(x, y)])
                 {
                     case CellType::Empty:
