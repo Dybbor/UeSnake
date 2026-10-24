@@ -7,4 +7,4 @@ call "%~dp0config.bat"
 -platform="%Platform%" ^
 -clientconfig="%Configuration%" ^
 -archivedirectory="%ArchivePath%" ^
--build -cook -package -stage -archive -pak -allmaps
+-build -cook -package -stage -archive -pak -allmaps -nodebuginfo
