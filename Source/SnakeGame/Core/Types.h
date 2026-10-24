@@ -8,6 +8,8 @@ namespace Snake
     {
         int32 width;
         int32 height;
+
+        bool operator==(const Dim&) const = default;
     };
 
     enum class CellType
@@ -21,5 +23,7 @@ namespace Snake
     struct Settings
     {
         Dim gridSize;
+
+        bool operator==(const Settings&) const = default;
     };
 }
