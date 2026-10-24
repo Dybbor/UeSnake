@@ -55,7 +55,7 @@ void ASG_Pawn::OnViewportResized(FViewport* Viewport, uint32 Value)
 {
     if (Viewport != GetOwnViewport())
         return;
-
+    
     if (!Viewport || !Viewport->GetSizeXY().Y || !Dim.height)
         return;
 
@@ -73,7 +73,9 @@ void ASG_Pawn::OnViewportResized(FViewport* Viewport, uint32 Value)
     }
     else
     {
-        check(ViewportAspectRatio) const double VerticalFOV = CalculateHalfVerticalFOVTan(Camera->FieldOfView, 1.0 / ViewportAspectRatio);
+        check(ViewportAspectRatio);
+
+        const double VerticalFOV = CalculateHalfVerticalFOVTan(Camera->FieldOfView, 1.0 / ViewportAspectRatio);
         LocationZ = WorldHeight / HalfFOVTan(VerticalFOV);
     }
 

@@ -55,6 +55,6 @@ void ASG_Grid::DrawGrid()
     for (int32 i = 0; i < GridDim.width + 1; ++i)
     {
         const auto StartLocation = GetActorLocation() + GetActorRightVector() * CellSize * i;
-        LineBatcher->DrawLine(StartLocation, StartLocation + GetActorForwardVector() * WorldWidth, FLinearColor::Red, 0, 2.0f);
+        LineBatcher->DrawLine(StartLocation, StartLocation + GetActorForwardVector() * WorldHeight, FLinearColor::Red, 0, 2.0f);
     }
 }
