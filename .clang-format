@@ -10,7 +10,8 @@ AllowShortBlocksOnASingleLine: false
 AlignAfterOpenBracket: DontAlign
 AllowShortFunctionsOnASingleLine: Inline
 PointerAlignment: Left
-AllowShortIfStatementsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLambdasOnASingleLine: false
 SpacesBeforeTrailingComments: 2
 AlwaysBreakTemplateDeclarations: Yes
 AlignEscapedNewlines: Left
