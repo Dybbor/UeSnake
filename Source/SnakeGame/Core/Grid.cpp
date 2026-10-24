@@ -55,7 +55,8 @@ namespace Snake
                         symbol = '*';
                         break;
                     default:
-                        throw std::runtime_error("Unknown cell type");
+                        checkf(false, TEXT("Unknown cell type"));
+                        break;
                 }
 
                 line.AppendChar(symbol).AppendChar(' ');
