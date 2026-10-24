@@ -21,8 +21,8 @@ set SourceCodePath=%ProjectRoot%\Source
 
 rem Build params
 set Platform=Win64
-:: Shipping, DebugGame
-set Configuration=Development
+:: Shipping, DebugGame, Development
+set Configuration=Shipping
 set ArchivePath=%ProjectRoot%\Build
 
 rem Other params
